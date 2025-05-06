@@ -10,28 +10,27 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted # Define o ambiente do runner (pode ser ubuntu, windows, macos)
+    runs-on: self-hosted  # Define o ambiente do runner (ou use ubuntu-latest)
     environment: dev
 
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v2  # Faz o checkout do repositório para o runner
+      - name: Check out the repository
+        uses: actions/checkout@v2
 
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v2
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.TOKEN }}  # <-- variável TOKEN do Environment "dev"
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.TOKEN }}  # <-- variável TOKEN do Environment "dev"
 
-     - name: Build Docker image
+      - name: Build Docker image
         run: docker build -t ghcr.io/${{ github.repository_owner }}/experimental-app:latest .
 
-     - name: Push Docker image
+      - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository_owner }}/experimental-app:latest
 
-
-    - name: Deploy (opcional)
-      run: |
-        echo "Aqui você pode adicionar seu script de deploy"
-        # Por exemplo, você pode adicionar um comando para fazer deploy do projeto
+      - name: Deploy (opcional)
+        run: |
+          echo "Aqui você pode adicionar seu script de deploy"
+          # Exemplo: docker-compose up -d
