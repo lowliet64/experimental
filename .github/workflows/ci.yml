@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # Define o ambiente do runner (pode ser ubuntu, windows, macos)
+    runs-on: self-hosted # Define o ambiente do runner (pode ser ubuntu, windows, macos)
 
     steps:
     - name: Check out the repository
